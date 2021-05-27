@@ -4,9 +4,12 @@ const puppeteer = require('puppeteer');
     headless: false,
   });
   const page = await browser.newPage();
-  await page.goto('https://youtube.com');
-  const title = await page.title();
-  const url = await page.url();
-  console.log(title, url);
+  await page.goto('https://reactjs.org');
+  const grabHeadline = await page.evaluate(() => {
+    // run any dom manipulation code
+    const headline = document.querySelectorAll('.css-1xm4gxl')[1];
+    return headline.innerHTML;
+  });
+  console.log(grabHeadline);
   await browser.close();
 })();
