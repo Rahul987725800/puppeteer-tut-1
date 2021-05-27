@@ -4,12 +4,14 @@ const puppeteer = require('puppeteer');
     headless: false,
   });
   const page = await browser.newPage();
-  await page.goto('https://reactjs.org');
-  const grabHeadline = await page.evaluate(() => {
-    // run any dom manipulation code
-    const headline = document.querySelectorAll('.css-1xm4gxl')[1];
-    return headline.innerHTML;
+  await page.goto('https://youtube.com');
+  const grabYoutubeTitles = await page.evaluate(() => {
+    const titleTags = document.querySelectorAll('#video-title');
+    const titles = [];
+    titleTags.forEach((titleTag) => titles.push(titleTag.innerHTML));
+    return titles;
   });
-  console.log(grabHeadline);
+  console.log(grabYoutubeTitles);
   await browser.close();
 })();
+// id="video-title"
