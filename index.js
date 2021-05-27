@@ -4,14 +4,16 @@ const puppeteer = require('puppeteer');
     headless: false,
   });
   const page = await browser.newPage();
-  await page.goto('https://youtube.com');
-  const grabYoutubeTitles = await page.evaluate(() => {
-    const titleTags = document.querySelectorAll('#video-title');
-    const titles = [];
-    titleTags.forEach((titleTag) => titles.push(titleTag.innerHTML));
-    return titles;
+  await page.goto('https://quotes.toscrape.com/');
+  await page.waitForSelector('.col-md-4 a');
+  await page.click('.col-md-4 a');
+  await page.waitForSelector('input#username');
+  await page.type('input#username', 'My Username', {
+    delay: 100,
   });
-  console.log(grabYoutubeTitles);
-  await browser.close();
+  await page.type('input#password', 'password', {
+    delay: 100,
+  });
+  await page.click('input[type=submit]');
+  // await browser.close();
 })();
-// id="video-title"
