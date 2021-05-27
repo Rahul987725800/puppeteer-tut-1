@@ -4,16 +4,23 @@ const puppeteer = require('puppeteer');
     headless: false,
   });
   const page = await browser.newPage();
-  await page.goto('https://quotes.toscrape.com/');
-  await page.waitForSelector('.col-md-4 a');
-  await page.click('.col-md-4 a');
-  await page.waitForSelector('input#username');
-  await page.type('input#username', 'My Username', {
-    delay: 100,
+  await page.goto('https://typing-speed-test.aoeu.eu/', {
+    timeout: 0, // to disable timeout
   });
-  await page.type('input#password', 'password', {
-    delay: 100,
+  await page.waitForSelector('.nextword');
+  const words = await page.evaluate(() => {
+    const wordElements = document.querySelectorAll('.nextword');
+
+    const words = [document.querySelector('.currentword').textContent];
+    wordElements.forEach((element) => {
+      words.push(element.textContent);
+    });
+    return words;
   });
-  await page.click('input[type=submit]');
+  console.log(words);
+  for (let i = 0; i < words.length; i++) {
+    await page.type('input#input', words[i]);
+    await page.keyboard.press(String.fromCharCode(32));
+  }
   // await browser.close();
 })();
