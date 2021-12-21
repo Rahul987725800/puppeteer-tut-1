@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "mongoose": "^5.12.11",
     "puppeteer": "^9.1.1"
   }
 }
